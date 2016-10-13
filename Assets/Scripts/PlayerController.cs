@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour {
     public float minY = -20;
     public float maxY = 20;
     public RayCast gun;
+    public TurretController turret;
 
     // Use this for initialization
     void Start () {
@@ -23,6 +24,12 @@ public class PlayerController : MonoBehaviour {
         float horizontal = Input.GetAxis("Horizontal");
         float mx = Input.GetAxis("Mouse X");
         float my = Input.GetAxis("Mouse Y");
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            turret.Shoot();
+        }
+
         if (controller.isGrounded)
         {
             controller.Move(transform.forward * vertical * move_speed * Time.deltaTime);
@@ -32,6 +39,7 @@ public class PlayerController : MonoBehaviour {
         {
             controller.Move(Physics.gravity * Time.deltaTime);
         }
+     
         transform.Rotate(transform.up * mx * speedRotate * Time.deltaTime);
         currentY = Mathf.Clamp(currentY - my * speedRotate * Time.deltaTime, minY, maxY);
         Vector3 camrot = Camera.main.transform.rotation.eulerAngles;
@@ -47,11 +55,13 @@ public class PlayerController : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
+        gun.turrets.Add(other.gameObject);
         gun.SwitchToLaser();
     }
 
     void OnTriggerExit(Collider other)
     {
+        gun.turrets.Remove(other.gameObject);
         gun.SwitchToShooting();
     }
 
