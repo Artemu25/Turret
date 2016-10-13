@@ -29,7 +29,9 @@ public class PlayerController : MonoBehaviour {
             controller.Move(transform.right * horizontal * move_speed * Time.deltaTime);
         }
         else
+        {
             controller.Move(Physics.gravity * Time.deltaTime);
+        }
         transform.Rotate(transform.up * mx * speedRotate * Time.deltaTime);
         currentY = Mathf.Clamp(currentY - my * speedRotate * Time.deltaTime, minY, maxY);
         Vector3 camrot = Camera.main.transform.rotation.eulerAngles;
