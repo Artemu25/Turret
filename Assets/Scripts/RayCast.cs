@@ -7,6 +7,7 @@ public class RayCast : MonoBehaviour {
     public Camera camera;
     private float nextFire;
     public Transform gunEnd;
+    private bool isNearTurrel = false;
 
     // Use this for initialization
     void Start () {
@@ -35,8 +36,20 @@ public class RayCast : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        Vector3 lineOrigin = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
-        Debug.DrawRay(lineOrigin, camera.transform.forward * 50, Color.green);
+        //Vector3 lineOrigin = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
+        //Debug.DrawRay(lineOrigin, camera.transform.forward * 50, Color.green);
+        Vector3 rayOrigin = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
+        RaycastHit hit;
+        laserLine.SetPosition(0, gunEnd.position);
+        //int 
+        if (Physics.Raycast(rayOrigin, camera.transform.forward, out hit))
+        {
+            laserLine.SetPosition(1, hit.point);
+        }
+        else
+        {
+            laserLine.SetPosition(1, rayOrigin + (camera.transform.forward * 50));
+        }
     }
 
     private IEnumerator ShotEffect()
@@ -45,6 +58,18 @@ public class RayCast : MonoBehaviour {
 
         yield return new WaitForSeconds(0.07f);
 
+        laserLine.enabled = false;
+    }
+
+    public void SwitchToLaser()
+    {
+        isNearTurrel = true;
+        laserLine.enabled = true;
+    }
+
+    public void SwitchToShooting()
+    {
+        isNearTurrel = false;
         laserLine.enabled = false;
     }
 }

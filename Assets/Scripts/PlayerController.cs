@@ -40,7 +40,18 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetMouseButton(0))
         {
             gun.Shoot();
-
         }
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        gun.SwitchToLaser();
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        gun.SwitchToShooting();
+    }
+
+
 }
