@@ -127,7 +127,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011216420658}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.0010774732, z: 0.8166703}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -285,9 +285,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6ecb66d6b2d4614dbf2a5afbe422b29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserLine: {fileID: 120000010965967034}
+  laserPointer: {fileID: 120000010965967034}
   gunEnd: {fileID: 4000010060898052}
-  gun: {fileID: 0}
+  turrelGun: {fileID: 1000014073660410}
 --- !u!120 &120000010965967034
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -321,8 +321,8 @@ LineRenderer:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}
   m_Parameters:
-    startWidth: 0.05
-    endWidth: 0.05
+    startWidth: 0.01
+    endWidth: 0.01
     m_StartColor:
       serializedVersion: 2
       rgba: 4294967295

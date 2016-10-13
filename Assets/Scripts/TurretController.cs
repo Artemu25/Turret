@@ -7,13 +7,14 @@ public class TurretController : MonoBehaviour {
     private float nextFire;
     private float deltaTime = 0.25f;
 
-    public LineRenderer laserLine;
+    public LineRenderer laserPointer;
     public Transform gunEnd;
     private bool isActive = false;
+    public GameObject turrelGun;
 
     // Use this for initialization
     void Start () {
-        laserLine.SetPosition(0, gunEnd.position);
+        laserPointer.SetPosition(0, gunEnd.position);
 	}
 	
 	// Update is called once per frame
@@ -42,30 +43,46 @@ public class TurretController : MonoBehaviour {
 
     private IEnumerator ShotEffect()
     {
-        laserLine.enabled = true;
+        laserPointer.enabled = true;
 
         yield return new WaitForSeconds(0.07f);
 
-        laserLine.enabled = false;
+        laserPointer.enabled = false;
     }
 
     void OnTriggerEnter(Collider other)
     {
         isActive = true;
-        laserLine.enabled = true;
+        laserPointer.enabled = true;
     }
 
     void OnTriggerExit(Collider other)
     {
         isActive = false;
-        laserLine.enabled = false;
+        laserPointer.enabled = false;
     }
 
     public void ChangeTarget(Vector3 target)
     {
         if (isActive)
         {
-            laserLine.SetPosition(1, target);
+            Vector3 v = Quaternion.FromToRotation(new Vector3(0, 0, 1), target - turrelGun.transform.position).eulerAngles;
+            v.z = 0;
+            Debug.Log(v.x + " " + v.y);
+            if (v.x > 180)
+            {
+                v.x = v.x - 360;
+            }
+            if (v.y > 180)
+            {
+                v.y = v.y - 360;
+            }
+
+            v.x = Mathf.Clamp(v.x, -30, 30);
+            v.y = Mathf.Clamp(v.y, -45, 45);
+            turrelGun.transform.rotation = Quaternion.Euler(v);
+            laserPointer.SetPosition(0, gunEnd.position);
+            laserPointer.SetPosition(1, target);
         }
     }
 }
