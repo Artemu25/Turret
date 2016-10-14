@@ -7,11 +7,12 @@ public class TurretController : MonoBehaviour {
     private float nextFire;
     private float deltaTime = 0.25f;
 
-    public LineRenderer laserPointer;
+    public LineRenderer laserPointer, laserShoot;
     public Transform gunEnd;
     private bool isActive = false;
     public GameObject turrelGun;
     private Vector3 vec;
+    private Vector3 target;
 
     // Use this for initialization
     void Start () {
@@ -26,30 +27,30 @@ public class TurretController : MonoBehaviour {
 
     public void Shoot()
     {
-        /*if (Time.time > nextFire)
+        if (Time.time > nextFire)
         {
             nextFire = Time.time + deltaTime;
             StartCoroutine(ShotEffect());
             RaycastHit hit;
-            laserLine.SetPosition(0, gunEnd.position);
+            laserShoot.SetPosition(0, gunEnd.position);
             if (Physics.Raycast(gunEnd.position, gunEnd.forward, out hit))
             {
-                laserLine.SetPosition(1, gun.LaserTarget);
+                laserShoot.SetPosition(1, target);
             }
             else
             {
-                laserLine.SetPosition(1, gunEnd.position + gunEnd.forward * 50);
+                laserShoot.SetPosition(1, gunEnd.position + gunEnd.forward * 50);
             }
-        }*/
+        }
     }
 
     private IEnumerator ShotEffect()
     {
-        laserPointer.enabled = true;
+        laserShoot.enabled = true;
 
         yield return new WaitForSeconds(0.07f);
 
-        laserPointer.enabled = false;
+        laserShoot.enabled = false;
     }
 
     void OnTriggerEnter(Collider other)
@@ -69,8 +70,9 @@ public class TurretController : MonoBehaviour {
     {
         if (isActive)
         {
+            this.target = target;
             //Working code
-            /*turrelGun.transform.rotation = Quaternion.LookRotation(target - turrelGun.transform.position);
+            turrelGun.transform.rotation = Quaternion.LookRotation(target - turrelGun.transform.position);
             Vector3 v = turrelGun.transform.localEulerAngles;
             v.z = 0;
             Debug.Log(v.x + " " + v.y);
@@ -85,11 +87,11 @@ public class TurretController : MonoBehaviour {
 
             v.x = Mathf.Clamp(v.x, -30, 30);
             v.y = Mathf.Clamp(v.y, -45, 45);
-            turrelGun.transform.localRotation = Quaternion.Euler(v);*/
+            turrelGun.transform.localRotation = Quaternion.Euler(v);
 
 
             //Not working. Why?
-            turrelGun.transform.localRotation = Quaternion.FromToRotation(transform.forward, target - turrelGun.transform.position);
+            //turrelGun.transform.localRotation = Quaternion.FromToRotation(transform.forward, target - turrelGun.transform.position);
             
 
             laserPointer.SetPosition(0, turrelGun.transform.position);

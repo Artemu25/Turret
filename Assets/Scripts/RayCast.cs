@@ -41,6 +41,13 @@ public class RayCast : MonoBehaviour {
                 }
             }
         }
+        else
+        {
+            foreach (GameObject t in turrets)
+            {
+                t.SendMessage("Shoot");
+            }
+        }
     }
 
 	// Update is called once per frame

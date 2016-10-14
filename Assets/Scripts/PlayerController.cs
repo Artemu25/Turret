@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour {
     public float maxY = 20;
     public RayCast gun;
     public TurretController turret;
+    private bool isNearTurrel = false;
 
     // Use this for initialization
     void Start () {
@@ -55,6 +56,7 @@ public class PlayerController : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
+        isNearTurrel = true;
         gun.turrets.Add(other.gameObject);
         gun.SwitchToLaser();
     }
@@ -63,6 +65,7 @@ public class PlayerController : MonoBehaviour {
     {
         gun.turrets.Remove(other.gameObject);
         if (gun.turrets.Count==0) {
+            isNearTurrel = false;
             gun.SwitchToShooting();
         }
     }
