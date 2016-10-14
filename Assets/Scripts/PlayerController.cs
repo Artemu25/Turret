@@ -62,7 +62,9 @@ public class PlayerController : MonoBehaviour {
     void OnTriggerExit(Collider other)
     {
         gun.turrets.Remove(other.gameObject);
-        gun.SwitchToShooting();
+        if (gun.turrets.Count==0) {
+            gun.SwitchToShooting();
+        }
     }
 
 

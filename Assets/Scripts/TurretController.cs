@@ -11,10 +11,12 @@ public class TurretController : MonoBehaviour {
     public Transform gunEnd;
     private bool isActive = false;
     public GameObject turrelGun;
+    private Vector3 vec;
 
     // Use this for initialization
     void Start () {
         laserPointer.SetPosition(0, gunEnd.position);
+        vec = gunEnd.transform.forward;
 	}
 	
 	// Update is called once per frame
@@ -62,11 +64,14 @@ public class TurretController : MonoBehaviour {
         laserPointer.enabled = false;
     }
 
+    //Problem method
     public void ChangeTarget(Vector3 target)
     {
         if (isActive)
         {
-            Vector3 v = Quaternion.FromToRotation(new Vector3(0, 0, 1), target - turrelGun.transform.position).eulerAngles;
+            //Working code
+            /*turrelGun.transform.rotation = Quaternion.LookRotation(target - turrelGun.transform.position);
+            Vector3 v = turrelGun.transform.localEulerAngles;
             v.z = 0;
             Debug.Log(v.x + " " + v.y);
             if (v.x > 180)
@@ -80,8 +85,14 @@ public class TurretController : MonoBehaviour {
 
             v.x = Mathf.Clamp(v.x, -30, 30);
             v.y = Mathf.Clamp(v.y, -45, 45);
-            turrelGun.transform.rotation = Quaternion.Euler(v);
-            laserPointer.SetPosition(0, gunEnd.position);
+            turrelGun.transform.localRotation = Quaternion.Euler(v);*/
+
+
+            //Not working. Why?
+            turrelGun.transform.localRotation = Quaternion.FromToRotation(transform.forward, target - turrelGun.transform.position);
+            
+
+            laserPointer.SetPosition(0, turrelGun.transform.position);
             laserPointer.SetPosition(1, target);
         }
     }
