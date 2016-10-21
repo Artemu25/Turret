@@ -290,6 +290,9 @@ MonoBehaviour:
   laserShoot: {fileID: 120000013255328698}
   gunEnd: {fileID: 4000010060898052}
   turrelGun: {fileID: 1000014073660410}
+  TestTarget: {fileID: 0}
+  m_shotPrefab: {fileID: 1000014047665380, guid: 353f3a6b070d8dd4eb9a3f2a48ed2a3f,
+    type: 2}
 --- !u!120 &120000010965967034
 LineRenderer:
   m_ObjectHideFlags: 1

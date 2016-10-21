@@ -13,6 +13,7 @@ public class RayCast : MonoBehaviour {
     private float deltaTime = 0.25f;
     public Vector3 LaserTarget;
     public List<GameObject> turrets;
+    public GameObject m_shotPrefab;
 
     // Use this for initialization
     void Start () {
@@ -34,10 +35,14 @@ public class RayCast : MonoBehaviour {
                 if (Physics.Raycast(rayOrigin, camera.transform.forward, out hit))
                 {
                     laserLine.SetPosition(1, hit.point);
+                    GameObject go = GameObject.Instantiate(m_shotPrefab, gunEnd.position, laserLine.transform.rotation) as GameObject;
+                    GameObject.Destroy(go, 3f);
                 }
                 else
                 {
                     laserLine.SetPosition(1, rayOrigin + (camera.transform.forward * rayLength));
+                    GameObject go = GameObject.Instantiate(m_shotPrefab, gunEnd.position, laserLine.transform.rotation) as GameObject;
+                    GameObject.Destroy(go, 3f);
                 }
             }
         }
@@ -81,7 +86,7 @@ public class RayCast : MonoBehaviour {
 
     private IEnumerator ShotEffect()
     {
-        laserLine.enabled = true;
+        //laserLine.enabled = true;
 
         yield return new WaitForSeconds(0.07f);
 
